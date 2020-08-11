@@ -1,0 +1,63 @@
+
+step1.do?no=1(1단계화면 요청)
+
+1.상품정보 조회
+2.OrderForm 객체 생성
+3.OrderForm에 상품정보 저장
+4.OrderForm 객체를 Model에 저장
+(주문화면에 상품정보를 표시하기 위해)
+4.step1.jsp로 이동
+5.주문자 정보 입력
+------------------------------------------------------------------------------------------------
+
+1단계 화면에 주문정보 입력후
+
+step1.do POST, amount, price, usertel, username
+
+1.세션에서 "orderForm"이라는 이름으로 저장된 객체를 찾는다. step1(@ModelAttribute("orderForm"))
+2.orderForm 객체의 변수명과 일치하는 요청파라미터를 조회
+3.구매수량, 구매가격, 구매자명, 구매자 연락처를 orderForm에 만든다.
+4.요청핸들러 메소드를 실행하고, 매게변수에 orderForm 객체 전달
+	step4(@ModelAttribute("orderForm")OrderForm orderForm)
+
+
+
+0807
+
+(전처리)
+Interceptor
+1.요청 URL분석
+2.요청 URL에 대한 접근권한 조회
+3.로그인한 사용자가 해당 접근 권한들 가져올지 체크해서
+컨트롤러의 실행여부 결정
+
+
+필터와 인터셉터 차이점
+
+			필터					인터셉터
+기술			JAVA web API				spring의 API
+위치			FrontController 앞에 위치		FrontController과 controller 사이
+스프링컨테이너		스프링컨테이너의 빈이 아니다.		스프링컨테이너의 빈이다.
+DI/AOP			사용불가				사용가능
+
+
+REST(Representational State Transfer)
+	- 자원을 이름(자원의 표현, URL)으로 구분하여 해당 자원 상태(정보)를 주고 받는 것
+	- HTTP URL을 사용해서 자원의 이름을 명시하고, HTTP Method를 사용해서
+	해당 자원에 대한 작업을 지정하는 것
+
+
+		HTTP Method		자원의 이름		보내는 데이터		받는 데이터
+----------------------------------------------------------------------------------------------------------------
+데이터 조회	GET			/rest/products/		없음			[{},{},{}]
+데이터 조회	GET			/rest/products/1	없음			{조회된 상품정보}
+데이터 추가	POST			/rest/products/		{"name":"맥북",...}	{추가된 상품정보}
+데이터 삭제	DELETE			/rest/products/1	없음
+데이터 수정	PUT			/rest/products/1	{"name":"맥북",...}	{수정된 상품정보}
+
+데이터 조회	GET			/rest/book/		없음
+데이터 조회	GET			/rest/book/1		없음
+데이터 추가	POST			/rest/book/		{"title":"xxx",...}
+데이터 삭제	DELETE			/rest/book/1		없음
+데이터 수정	PUT			/rest/book/1		{"title":"xxx",...}
+
